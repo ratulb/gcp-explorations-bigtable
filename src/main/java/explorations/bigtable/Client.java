@@ -9,7 +9,7 @@ tml
 public class Client {
   public static void main(String[] args) throws Exception {
     System.out.println("Querying my-table rows!");
-    BigtableDataClient client = BigtableDataClient.create("static-lens-314215", "bigtable-instance");
+    BigtableDataClient client = BigtableDataClient.create("project1", "instance1");
     for (Row row: client.readRows(Query.create("my-table"))) {
       // Do something with row
       for (RowCell cell: row.getCells()) {
