@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #echo project = `gcloud config get-value project` > ~/.cbtrc
-#echo instance = bigtable-instance >> ~/.cbtrc
-#cbt createinstance bigtable-instance "My bigtable" bigtable-instance-c1 asia-south1-a 1 HDD
+#echo instance = instance1 >> ~/.cbtrc
+#cbt createinstance instance1 "My bigtable" cluster1 asia-south1-a 1 HDD
 #mvn archetype:generate -DgroupId=explorations.bigtable -DartifactId=bigtable101 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 
 #cbt createtable my-table
@@ -15,11 +15,11 @@ mvn exec:java -Dexec.mainClass=explorations.bigtable.Client
 
 GOOGLE_APPLICATION_CREDENTIALS=spanner-credentials.json java -jar bigtable-beam-import-1.6.0-shaded.jar export \
 --runner=dataflow \
---project=static-lens-314215 \
---bigtableInstanceId=bigtable-instance \
+--project=project1 \
+--bigtableInstanceId=instance1 \
 --bigtableTableId=my-table \
---destinationPath=gs://onlymydatastore/export-path \
---tempLocation=gs://onlymydatastore/tmp-path \
+--destinationPath=gs://datastore/export-path \
+--tempLocation=gs://datastore/tmp-path \
 --maxNumWorkers=1 \
 --zone=asia-south1-a
 
@@ -28,10 +28,10 @@ GOOGLE_APPLICATION_CREDENTIALS=spanner-credentials.json java -jar bigtable-beam-
 
  GOOGLE_APPLICATION_CREDENTIALS=spanner-credentials.json java -jar bigtable-beam-import-1.6.0-shaded.jar import \
 --runner=dataflow \
---project=static-lens-314215 \
---bigtableInstanceId=bigtable-instance \
+--project=project1 \
+--bigtableInstanceId=instance1 \
 --bigtableTableId=my-table \
---sourcePattern='gs://onlymydatastore/export-path/part-*' \
---tempLocation=gs://onlymydatastore/tmp-path \
+--sourcePattern='gs://datastore/export-path/part-*' \
+--tempLocation=gs://datastore/tmp-path \
 --maxNumWorkers=1 \
 --zone=asia-south1-a
